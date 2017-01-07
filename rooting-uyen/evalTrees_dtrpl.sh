@@ -11,6 +11,6 @@ while read tt && read -u 3 et; do
 	perl -pi -e 'chomp if eof' true.tre
 	perl -pi -e 'chomp if eof' estimated.tre
 	quart_bin calcTripDist true.tre estimated.tre
-done < $truetrees 3< $estimatedtrees | numlist -avg
+done < $truetrees 3< $estimatedtrees
 
 rm true.tre estimated.tre
