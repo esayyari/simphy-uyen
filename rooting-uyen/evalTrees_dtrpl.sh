@@ -10,7 +10,7 @@ while read tt && read -u 3 et; do
 	echo $et > estimated.tre
 	perl -pi -e 'chomp if eof' true.tre
 	perl -pi -e 'chomp if eof' estimated.tre
-	quart_bin calcTripDist true.tre estimated.tre
+	dtrpl_norm.sh true.tre estimated.tre
 done < $truetrees 3< $estimatedtrees
 
 rm true.tre estimated.tre
