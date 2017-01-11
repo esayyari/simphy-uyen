@@ -11,7 +11,7 @@ i=1
 
 #awk '{print $2;}' $infofile | paste - - - - > info_temp
 
-[ -e $outfile ] & rm $outfile
+[ -e $outfile ] && rm $outfile
 
 while read info && read -u 3 tree; do 
 	echo $i
