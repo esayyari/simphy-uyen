@@ -2,8 +2,8 @@
 import sys
 
 infile=sys.argv[1]
+theta=sys.argv[2]
 
-theta = 1.75
 with open(infile,'r') as f:
 	for line in f:
 		std_OG,std_MV,dtrpl_OG,dtrpl_MV = [ float(x) for x in line.split() ]
