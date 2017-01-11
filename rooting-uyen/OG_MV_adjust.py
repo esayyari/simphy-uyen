@@ -1,3 +1,4 @@
+# ! /usr/bin/env python
 import sys
 
 infile=sys.argv[1]
@@ -5,7 +6,7 @@ infile=sys.argv[1]
 theta = 1.75
 with open(infile,'r') as f:
 	for line in f:
-		std_OG,std_MV,dtrpl_OG,dtrpl_MV = [ int(x) for x in line.split() ]
+		std_OG,std_MV,dtrpl_OG,dtrpl_MV = [ float(x) for x in line.split() ]
 	if std_MV == 0:
 		print(dtrpl_MV)
 	else:
