@@ -2,7 +2,7 @@
 import sys
 
 infile=sys.argv[1]
-theta=sys.argv[2]
+theta=float(sys.argv[2])
 
 with open(infile,'r') as f:
 	for line in f:
