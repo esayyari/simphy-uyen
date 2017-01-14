@@ -1,6 +1,4 @@
 # ! /bin/bash
-# Note: only work with the convention of my experiments for the project
-# species taxa and gene taxa are the same. Each species has only 1 taxon
 
 fn=$1
 tmp=`mktemp "control-$fn-XXXXX"`
