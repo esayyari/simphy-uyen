@@ -13,23 +13,6 @@ echo "$fn
 mpest $tmp 1>$fn.mpest.out
 
 mv $fn.tre $fn.mpest.all
-#grep "tree mpest" $fn.mpest.all | awk -F '= ' '{print $2;}' > $fn.mpest.tre
-
-python -c '
-import os
-import sys
-import dendropy
- 
-src_fpath = os.path.expanduser(os.path.expandvars("'$fn.mpest.all'"))
-if not os.path.exists(src_fpath):
-    sys.stderr.write("Not found: %s" % src_fpath) 
-    sys.exit(1)     
- 
-dest_fpath = os.path.expanduser("'$fn.mpest.tre'")
-
-trees = dendropy.TreeList.get_from_path(src_fpath, "nexus")
-trees[-1].write_to_path(dest_fpath, "newick",suppress_rooting=True)'
-
-
-
-test $? == 0 || exit 1
+tmp_tre=`mktemp "control-$fn-XXXXX"`
+grep "tree mpest" $fn.mpest.all | awk -F '= ' '{print $2;}' > $tmp_tre
+fix_mpest_output.sh $tmp_tre $fn.mpest.tre

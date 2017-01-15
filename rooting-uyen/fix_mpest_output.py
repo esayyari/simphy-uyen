@@ -16,4 +16,3 @@ for node in tree.leaf_node_iter(): # doesn't work for some reasons >_<
 		node.taxon.label = str(int(node.taxon.label)-1);
 
 tree.write_to_path(dest_fpath, "newick",suppress_rooting=True)
-
