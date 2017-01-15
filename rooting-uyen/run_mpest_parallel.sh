@@ -18,3 +18,5 @@ mv $fn.tre $fn.mpest.all
 tmp_tre=`mktemp "control-$fn-XXXXX"`
 grep "tree mpest" $fn.mpest.all | awk -F '= ' '{print $2;}' > $tmp_tre
 fix_mpest_output.py $tmp_tre $fn.mpest.tre
+
+rm $tmp $tmp_tre
