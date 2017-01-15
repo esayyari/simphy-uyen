@@ -1,7 +1,7 @@
 # ! /bin/bash
 
 fn=$1
-np=$2
+np=$3
 
 tmp=`mktemp "control-$fn-XXXXX"`
 echo "$fn
