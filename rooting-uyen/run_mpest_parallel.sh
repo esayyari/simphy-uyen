@@ -1,6 +1,9 @@
 # ! /bin/bash
 
 fn=$1
+mapfile=$2
+np=$3
+
 tmp=`mktemp "control-$fn-XXXXX"`
 echo "$fn
 0
