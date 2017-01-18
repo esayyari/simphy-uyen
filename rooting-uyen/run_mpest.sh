@@ -26,4 +26,4 @@ tmp_tre=`mktemp "tre-$fn-XXXXX"`
 grep "tree mpest" $fn.mpest.all | awk -F '= ' '{print $2;}' > $tmp_tre
 fix_mpest_output.py $tmp_tre $species $fn.mpest.tre
 
-#rm $ctrl $tmp_tre $map $species
+rm $ctrl $tmp_tre $map $species
