@@ -1,6 +1,8 @@
 # ! /bin/bash
 
 fn=$1
+np=$2
+
 ctrl=`mktemp "control-$fn-XXXXX"`
 map=`mktemp "map-$fn-XXXXX"`
 species=`mktemp "species-$fn-XXXXX"`
