@@ -11,7 +11,7 @@ method=$3
 #cat $genetrees |sed -e "s/:[^),]*//g" -e "s/)[0-9.]*//g" -e "s/[(,);]/ /g" -e 's/ /\'$'\n''/g' |sort|uniq|tail -n+2|sed "s/\(.*\)\_.*\_.*$/& s\1/" > $tmp_map
 
 species=`mktemp "species-XXXXX"`
-head -n 1 $genetrees | nw_labels -I - | sort | tail -n +2 > $species
+head -n 1 $genetrees | nw_labels -I - > $species
 
 map=`mktemp "map-XXXXX"`
 while read line; do
