@@ -8,8 +8,6 @@ estimatedtrees=$2
 while read tt && read -u 3 et; do 
 	echo $tt > true.tre
 	echo $et > estimated.tre
-	perl -pi -e 'chomp if eof' true.tre
-	perl -pi -e 'chomp if eof' estimated.tre
 	dtrpl_norm.sh true.tre estimated.tre
 done < $truetrees 3< $estimatedtrees
 
