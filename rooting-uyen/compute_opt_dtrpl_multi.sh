@@ -17,6 +17,7 @@ while read ref && read -u 3 targ; do
 	echo $targ > $curr_targ
 	compute_opt_dtrpl.sh $curr_ref $curr_targ $curr_opt
 	cat $curr_opt >> $opttrees
+	printf "\n" >> $opttrees
 done < $reftrees 3< $targtrees
 
 rm $curr_ref $curr_targ $curr_opt
