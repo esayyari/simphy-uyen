@@ -22,7 +22,7 @@ while read line; do
 	#reroot_at_edge.py -i $esttree -n $node -d $x -o $tmptre
 	nw_reroot $esttree $node > $tmptre
 	dtrpl=`dtrpl_norm.sh $truetree $tmptre`
-	cmp=`python compare_numbers.py $min_dtrpl $dtrpl`
+	cmp=`compare_numbers.py $min_dtrpl $dtrpl`
 	if [ "$cmp" -eq 1 ]
 	then
 		min_dtrpl=$dtrpl
