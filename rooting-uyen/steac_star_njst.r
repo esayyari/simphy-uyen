@@ -336,10 +336,6 @@ g_names=colnames(species.structure)
 if (args[1]== "steac") {
 outtree=steac.sptree(trees, s_names, g_names,species.structure,outgroup,method="nj")
 } else if (args[1]== "star"){
-print(s_names)
-print(g_names)
-print(species.structure)
-print(outgroup)
 outtree=star.sptree(trees, s_names, g_names,species.structure,outgroup,method="nj")
 } else {
 outtree=njst.sptree(trees, s_names, g_names,species.structure)
