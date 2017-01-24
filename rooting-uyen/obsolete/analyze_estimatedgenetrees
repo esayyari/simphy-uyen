@@ -1,0 +1,11 @@
+# !/bin/bash
+
+datapath=/home/uym2/simphy_root/simphy-estimated
+treename=estimatedgenetre.gtr
+
+./labeltree.sh
+./randroot.sh
+./rm_outgroup.sh
+./MP_root.sh
+./MV_root.sh
+./eval.sh	
