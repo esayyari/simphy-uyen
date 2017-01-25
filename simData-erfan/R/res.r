@@ -1,10 +1,52 @@
 setwd(dirname(sys.frame(1)$ofile))
 
-d<-read.csv('../estimatedGenetrees.removed.csv',sep=' ',header=F)
+d<-read.csv('../../data/gtError-simphy-uyen.csv1',sep=' ',header=F)
 source("../R/setup.r");
 d$V1<-as.factor(d$V1);
 d$V2<-as.factor(d$V2);
 d$V3<-as.factor(d$V3);
+d$V4<-as.factor(d$V4);
+d<-d[!(d$V7 %in% "-"),]
+d$V6<-as.numeric(as.character(d$V6))
+d$V7<-as.numeric(as.character(d$V7))
+d$V8<-as.numeric(as.character(d$V8))
+d$V9<-as.numeric(as.character(d$V9))
+d$V10<-as.numeric(as.character(d$V10))
+d$V11<-as.numeric(as.character(d$V11))
+d$rf=as.numeric((d$V7+d$V10)/(d$V6+d$V9))
+d.sum = summarySE(d,measurevar="rf",groupvars=c("V1","V2","V4","V5"),na.rm=T,conf.interval=.95)
+d.sum$rf = as.numeric(d.sum$rf)
+cdat <- ddply(d.sum, c("V1","V2","V4"), summarise, rating.mean=mean(rf))
+cdat[,4]<-as.numeric(cdat[,4])
+
+d$method<-paste(d$V2,d$V3,sep="-")
+ggplot(data=d[d$V4 %in% "1.5",],aes(x=rf,color=V2))+geom_density()+
+  theme_bw()+theme(legend.position = "bottom")+
+  scale_color_brewer(name="Outgroup to Ingroup ratio",palette="Dark2")+
+  xlab('RF distance (true vs estimated)')+facet_wrap(~V1)
+
+
+ggplot(data=d,aes(x=method,y=rf,fill=method))+
+  geom_boxplot()+facet_wrap(~V1)+scale_fill_brewer(name="",palette="BuPu")+
+  theme_bw()+
+    theme(legend.position = "bottom",
+          axis.text.x = element_text(face="bold",angle=90))+
+  scale_color_brewer(name="Method",palette="Dark2")+
+  xlab('Method')+facet_wrap(~V1)+ylab('RF distance (true vs estimated)')
+ggsave('geneTreeError.pdf',width=6.5,height=4)
+
+
+  #geom_vline(data=cdat[d$V4 %in% "1.5",], 
+  #aes(xintercept=rating.mean, color=V2),size=1,linetype="dashed")
+
+d<-read.csv('../../data/compareSpVsGenes.score.csv1',sep=' ',header=F)
+d$V1<-as.factor(d$V1);
+d$V2<-as.factor(d$V2);
+d$V3<-as.factor(d$V3);
+d$V4<-as.factor(d$V4);
+ggplot(data=d,aes(x=V8,color=V2,linetype=V4))+geom_density()+theme_bw()+
+  facet_wrap(~V1)+scale_color_brewer(name="Outgroup to Ingroup ratio",palette="Dark2")
+
 
 d$rf=as.numeric((d$V7+d$V10)/(d$V6+d$V9))
 d.sum = summarySE(d,measurevar="rf",groupvars=c("V1","V2","V4","V5"),na.rm=T,conf.interval=.95)
@@ -13,60 +55,43 @@ d.sum$rep=as.factor(interaction(d.sum$V5,as.numeric(d.sum$V4)))
 cdat <- ddply(d.sum, c("V1","V2","V5"), summarise, rating.mean=mean(rf))
 cdat[,4]<-as.numeric(cdat[,4])
 
-qplot(reorder(rf,rep),rf,
-      data=d.sum[d.sum$V5 %in% c("jc") & d.sum$V1 %in% c(1), ],ylab="RF (true vs estimated gene trees)",
-      xlab="replicates ordered by gene tree error",
-      main="gene tree error for replicates of various model conditions")+
-  facet_grid(V1~V2,scales="free_x")+
-  geom_errorbar(aes(ymin=rf-sd, ymax=rf+sd),color="blue")+theme_bw()+
-  th4+theme(plot.margin=unit(c(0,0,0,0),"mm"))
-ggsave('estimated_vs_true_gene_trees-errorbar-outGroupToIngroup.1.Gene-by-lineage-specific-rate-heterogeneity-varies.pdf.pdf')
+
+d<-read.csv('../../data/outgroup-err.csv',sep=" ",header=F)
+
+d$V1<-as.factor(d$V1);
+d$V2<-as.factor(d$V2);
+d$V3<-as.factor(d$V3);
+d$V4<-as.factor(d$V4);
+d$V6<-as.numeric(d$V6);
+d$method<-paste(d$V2,d$V3,sep="-")
+
+d<-read.csv('../../data/quartetscore.csv',sep=" ",header=F)
+d$V1<-as.factor(d$V1);
+d$V2<-as.factor(d$V2);
+d$V3<-as.factor(d$V3);
+d$V4<-as.factor(d$V4);
+d$method<-paste(d$V2,d$V3,sep="-")
+d$rat<-(d$V6-d$V7)/d$V6
 
 
-qplot(reorder(rf,rep),rf,
-      data=d.sum[d.sum$V5 %in% c("jc") & d.sum$V1 %in% c(0), ],ylab="RF (true vs estimated gene trees)",
-      xlab="replicates ordered by gene tree error",
-      main="gene tree error for replicates of various model conditions")+
-  facet_grid(V1~V2,scales="free_x")+
-  geom_errorbar(aes(ymin=rf-sd, ymax=rf+sd),color="blue")+theme_bw()+
-  th4+theme(plot.margin=unit(c(0,0,0,0),"mm"))
-ggsave('estimated_vs_true_gene_trees-errorbar-outGroupToIngroup.0.Gene-by-lineage-specific-rate-heterogeneity-varies.pdf')
 
-qplot(as.factor(reorder(rf,rep)),rf,
-      data=d.sum[d.sum$V5 %in% c("jc") & d.sum$V2 %in% c(1.5), ],ylab="RF (true vs estimated gene trees)",
-      xlab="replicates ordered by gene tree error",
-      main="gene tree error for replicates of various model conditions")+
-  facet_wrap(~V1)+
-  geom_errorbar(aes(ymin=rf-sd, ymax=rf+sd),color="blue")+theme_bw()+
-  th4+theme(plot.margin=unit(c(0,0,0,0),"mm"))
-ggsave('estimated_vs_true_gene_trees-errorbart-outGroupToIngroup-varies.Gene-by-lineage-specific-rate-heterogeneity1.5.pdf')
+ggplot(d[!(d$V2%in%"0"),], aes(x=rat,color=method)) + stat_ecdf(geom = "step") +
+  scale_color_brewer(name="Method",palette="Dark2")+
+  scale_y_continuous(labels = scales::percent)+xlab('Outgroup missplacement ratio')+
+  ylab('Percent of replicates')+theme_bw()+theme(legend.position='bottom')+facet_wrap(~V1)
+ggsave('outgroup_ecdf.pdf',height=4,width=6.5)
 
 
-ggplot(data=d[d$V1  %in% c(0,1),],aes(rf,fill=V2))+geom_density(alpha=0.5,adjust=2)+
-  xlab("RF distance (true vs estimated)")+facet_wrap(~V1)+
-  geom_vline(data=cdat[cdat$V1 %in% c(0,1),], aes(xintercept=rating.mean, colour=V2),size=1,linetype="dashed")+
-  theme_bw()+scale_linetype_discrete(name="rate")+
- scale_x_continuous(labels=percent)+scale_fill_brewer(name="",palette="Dark2")+
-  scale_color_brewer(name="",palette="Dark2")+
-  ggtitle("Gene tree estimation error")
-ggsave('estimated_vs_true_gene_trees-density-outGroupToIngroup.0.or.1.Gene-by-lineage-specific-rate-heterogeneity-varies.pdf')
 
-ggplot(data=d[d$V2  %in% c(1.5),],aes(rf,fill=V1))+geom_density(alpha=0.5,adjust=2)+
-  xlab("RF distance (true vs estimated)")+facet_grid(V5~V1)+
-  geom_vline(data=cdat[cdat$V2 %in% c(1.5),], aes(xintercept=rating.mean, colour=V1),size=0.5,linetype="dashed")+
-  theme_bw()+scale_linetype_discrete(name="rate")+
-  scale_x_continuous(labels=percent)+scale_fill_brewer(name="",palette="Dark2")+
-  scale_color_brewer(name="",palette="Dark2")+
-  ggtitle("Gene tree estimation error")
-ggsave('estimated_vs_true_gene_trees-density-outGroupToIngroup-varies.Gene-by-lineage-specific-rate-heterogeneity1.5.pdf')
+ggplot(data=d,aes(x=method,y=V6,fill=method))+
+  geom_boxplot()+facet_wrap(~V1)+scale_fill_brewer(name="",palette="BuPu")+
+  theme_bw()+
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(face="bold",angle=90))+
+  scale_color_brewer(name="Ingroup outgroup ratio-species/genes heterogenit",palette="Dark2")+ylab('QuartetScore')+
+  xlab('RF distance (true vs estimated)')+facet_wrap(~V1)
+ggsave('quartetScore.pdf',height=4,width=6)
 
 
-ggplot(data=d[d$V2  %in% c(1.5),],aes(rf,fill=V1))+geom_density(alpha=0.5,adjust=2)+
-  xlab("RF distance (true vs estimated)")+facet_wrap(~V5)+
-  geom_vline(data=cdat[cdat$V2 %in% c(1.5),], aes(xintercept=rating.mean, colour=V1),size=0.5,linetype="dashed")+
-  theme_bw()+scale_linetype_discrete(name="rate")+
-  scale_x_continuous(labels=percent)+scale_fill_brewer(name="",palette="Dark2")+
-  scale_color_brewer(name="",palette="Dark2")+
-  ggtitle("Gene tree estimation error")
-ggsave('estimated_vs_true_gene_trees-density-all-in-one-outGroupToIngroup-varies.Gene-by-lineage-specific-rate-heterogeneity1.5.pdf')
+
 
