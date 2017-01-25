@@ -23,7 +23,7 @@ while read line; do
 done < $species > $map
 
 #call Rscript (the main part is here!)
-Rscript steac_star_njst.r $method $gtre_dmog $map D00 $s_tree
+Rscript $stdir/steac_star_njst.r $method $gtre_dmog $map D00 $s_tree
 
 #remove dummy outgroup from s_tree
 outtre=`mktemp "tre-XXXXX"`
