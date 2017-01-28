@@ -36,7 +36,7 @@ q<-ggplot(data=d[d$V3 %in% c("Medium: α=1.5"),],aes(x=V2,y=rf,fill=V2))+
   theme_bw()+
     theme(legend.position = "bottom",axis.text.y = element_text(face="bold"),
           axis.text.x = element_text(face="bold"))+
-  xlab('Divergence from clock (α)')+facet_wrap(~V1)+ylab('RF distance (true vs estimated gene trees)')
+  xlab('Root to crown ratio')+facet_wrap(~V1)+ylab('RF distance (true vs estimated gene trees)')
 print(q)
 dev.off()
 
@@ -104,7 +104,7 @@ print(q)
 dev.off()
 
 
-cairo_pdf(file = 'quartetScoreBoxPlotOutInFixed1.pdf',height=3.4,width=7.5)
+cairo_pdf(file = 'quartetScoreBoxPlotOutInFixed1.pdf',height=4,width=9)
 q<-ggplot(data=d[d$V2%in% c("1") ,],aes(x=V3,y=V6,fill=V3))+
   geom_boxplot()+
   theme_bw()+
