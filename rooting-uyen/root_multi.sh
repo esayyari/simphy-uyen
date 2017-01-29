@@ -16,7 +16,7 @@ temp_info=`mktemp tmp-XXXXX`
 
 while read l; do 
 	echo $l > $temp_in
-	{ time FastRoot.py -i $temp_in -m $method -o $temp_out -f $temp_info; } 2 >> $timefile
+	{ time FastRoot.py -i $temp_in -m $method -o $temp_out -f $temp_info ; } 2>> $timefile
 	cat $temp_out >> $outtree
 	cat $temp_info >> $outinfo
 	rm $temp_in $temp_out $temp_info
