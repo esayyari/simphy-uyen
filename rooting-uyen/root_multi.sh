@@ -19,6 +19,6 @@ while read l; do
 	{ time FastRoot.py -i $temp_in -m $method -o $temp_out -f $temp_info ; } 2>> $timefile
 	cat $temp_out >> $outtree
 	cat $temp_info >> $outinfo
-	rm $temp_in $temp_out $temp_info
 done < $intree
 
+rm $temp_in $temp_out $temp_info
