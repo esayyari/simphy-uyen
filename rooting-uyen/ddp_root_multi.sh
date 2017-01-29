@@ -5,11 +5,12 @@ outtree=$2
 outtime=$3
 
 [ -e $outtree ] && rm $outtree
-
+in=`mktemp in-XXXXX`
+out=`mktemp out-XXXXX`
 while read l; do 
-	echo $l > temp_in
-	{ time dendropy_MP.py temp_in temp_out ; } 2>> $outtime
-	cat temp_out >> $outtree
-	rm temp_in temp_out 
+	echo $l > $in
+	{ time dendropy_MP.py $in $out ; } 2>> $outtime
+	cat $out >> $outtree
+	rm $in $out
 done < $intree
 
