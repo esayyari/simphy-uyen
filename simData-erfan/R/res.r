@@ -169,7 +169,7 @@ ggplot(data=d.sum[d.sum$V2%in%c("1"),],aes(reorder(rf,rep),rf))+
   ylab("Coefficient of variation of gt root to leaf bl")+
   xlab("Replicates ordered by gene tree error")+theme_bw()+
   geom_errorbar(aes(ymin=rf-sd, ymax=rf+sd),color="blue")+geom_point(size=0.1)+
-  theme_bw()+th4+theme(plot.margin=unit(c(0,0,0,0),"mm"))+facet_grid(V3~V1,scales='free')
+  theme_bw()+th4+theme(plot.margin=unit(c(0,0,0,0),"mm"))+facet_grid(V3~V1,scales='free_x')
 ggsave('CoefficientBargraph.pdf',width=8,height=6)
 
 
