@@ -5,3 +5,7 @@
   ### [Triplet distance](https://jensjohansen.com/thesis/)
   ### [MyTools](https://github.com/uym2/myTools)
   ### [FastRoot](https://github.com/uym2/MinVar-Rooting/)
+  
+## Contact
+Uyen Mai
+umai@eng.ucsd.edu
